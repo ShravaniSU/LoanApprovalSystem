@@ -1,0 +1,7 @@
+$schema: https://azuremlschemas.azureedge.net/latest/mlTable.schema.json
+paths:
+  - file: ./loan-predictor-traindata.csv
+transformations:
+  - read_delimited:
+      delimiter: ','
+      header: all_files_same_headers

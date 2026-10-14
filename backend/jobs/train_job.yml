@@ -1,0 +1,17 @@
+$schema: https://azuremlschemas.azureedge.net/latest/commandJob.schema.json
+type: command
+display_name: loan-training-job
+experiment_name: loan-approval-experiment
+code: ..
+command: >-
+  python src/train.py
+  --data_path ${{inputs.training_data}}
+inputs:
+  training_data:
+    type: mltable
+    mode: direct
+    path: azureml:loan-prediction-data-mltable:1
+environment:
+  conda_file: ../environments/conda.yml
+  image: mcr.microsoft.com/azureml/mlflow-ubuntu20.04-py38-cpu-inference:latest
+compute: azureml:loanpredictor-computecluster
