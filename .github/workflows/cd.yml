@@ -39,8 +39,6 @@ jobs:
         run: |
           # Example command to deploy or update your endpoint using Azure CLI
           az ml online-deployment update \
-            --name blue \
-            --endpoint-name loan-prediction-endpoint \
-            --model ${{ inputs.model_name }}:1 \
+            --file ./backend/jobs/blueDeployment.yml \
             --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }} \
             --workspace-name ${{ secrets.AZURE_ML_WORKSPACE }}
