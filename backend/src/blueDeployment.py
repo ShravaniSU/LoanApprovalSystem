@@ -37,7 +37,7 @@ blue_deployment = ManagedOnlineDeployment(
     model=model,
     environment=inference_env,
     code_configuration=CodeConfiguration(
-        code=".",       # Folder where your score.py is located
+        code="src",       # Folder where your score.py is located
         scoring_script="score.py"
     ),
     instance_type="Standard_F2s_v2",
