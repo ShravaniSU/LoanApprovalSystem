@@ -42,6 +42,7 @@ blue_deployment = ManagedOnlineDeployment(
     ),
     instance_type="Standard_F2s_v2",
     instance_count=1,
+    app_insights_enabled=True,
 )
 
 # 5. Create or update the deployment
