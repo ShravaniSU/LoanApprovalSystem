@@ -10,3 +10,4 @@ outputs/
 venv/
 frontend/
 backend/config.json
+backend/.env
