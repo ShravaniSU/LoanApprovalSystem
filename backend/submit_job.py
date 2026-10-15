@@ -32,6 +32,3 @@ returned_job = ml_client.jobs.create_or_update(job)
 
 print("Job Submitted successfully")
 print(f"Job Name : {returned_job.name}")
-
-print("Waiting for Azure ML Training job to complete...")
-ml_client.jobs.stream(returned_job.name)

@@ -11,3 +11,4 @@ venv/
 frontend/
 backend/config.json
 backend/.env
+.github/workflows/cd.yml
