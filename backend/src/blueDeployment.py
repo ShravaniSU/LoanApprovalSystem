@@ -7,7 +7,12 @@ from azure.ai.ml.entities import (
 )
 
 # 1. Connect to your AzureML workspace
-ml_client = MLClient.from_config(credential=DefaultAzureCredential())
+ml_client = MLClient(
+    credential=DefaultAzureCredential(),
+    subscription_id=os.environ["AZURE_SUBSCRIPTION_ID"],
+    resource_group_name=os.environ["AZURE_RESOURCE_GROUP"],
+    workspace_name=os.environ["AZURE_ML_WORKSPACE"],
+)
 
 # 2. Define a unique endpoint name
 endpoint_name = "loan-prediction-endpoint"
