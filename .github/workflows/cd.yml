@@ -41,6 +41,6 @@ jobs:
           az ml online-deployment update \
             --name blue \
             --endpoint-name loan-prediction-endpoint \
-            --model ${{ inputs.model_name }}:latest \
+            --model ${{ inputs.model_name }}:1 \
             --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }} \
             --workspace-name ${{ secrets.AZURE_ML_WORKSPACE }}
