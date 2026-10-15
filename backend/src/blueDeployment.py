@@ -1,3 +1,4 @@
+import os
 from azure.ai.ml import MLClient
 from azure.identity import DefaultAzureCredential
 from azure.ai.ml.entities import (
@@ -6,7 +7,7 @@ from azure.ai.ml.entities import (
     CodeConfiguration,
 )
 
-# 1. Connect to your AzureML workspace
+# 1. Connect to your AzureML workspace using environment variables from GitHub Secrets
 ml_client = MLClient(
     credential=DefaultAzureCredential(),
     subscription_id=os.environ["AZURE_SUBSCRIPTION_ID"],
@@ -25,9 +26,7 @@ endpoint = ManagedOnlineEndpoint(
 )
 ml_client.online_endpoints.begin_create_or_update(endpoint).result()
 
-# 3. Retrieve your registered model and environment
-# (Replace "loan-prediction-model" with your actual registered model name and version)
-# Automatically fetch the latest version of the registered model
+# 3. Automatically fetch the latest version of the registered model
 model = ml_client.models.get(name="loan_prediction_model", label="latest")
 inference_env = ml_client.environments.get(name="loan-prediction-inference-env", version="2")
 
