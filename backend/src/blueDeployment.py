@@ -22,7 +22,8 @@ ml_client.online_endpoints.begin_create_or_update(endpoint).result()
 
 # 3. Retrieve your registered model and environment
 # (Replace "loan-prediction-model" with your actual registered model name and version)
-model = ml_client.models.get(name="loan-prediction-model", version="1")
+# Automatically fetch the latest version of the registered model
+model = ml_client.models.get(name="loan_prediction_model", label="latest")
 inference_env = ml_client.environments.get(name="loan-prediction-inference-env", version="2")
 
 # 4. Configure the deployment using your existing environment and score.py

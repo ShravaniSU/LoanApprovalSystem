@@ -2,11 +2,6 @@ name: Azure ML CD Pipeline
 
 on:
   workflow_dispatch:
-    inputs:
-      model_name:
-        description: "Name of the registered model to deploy"
-        required: true
-        default: "loan_prediction_model"
 
 permissions:
   contents: read
@@ -15,9 +10,22 @@ permissions:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./backend
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
 
       - name: Azure Login
         uses: azure/login@v2
@@ -26,19 +34,10 @@ jobs:
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
-
-      - name: Install Azure ML CLI
+      - name: Run Deployment Script
+        env:
+          AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          AZURE_RESOURCE_GROUP: ${{ secrets.AZURE_RESOURCE_GROUP }}
+          AZURE_ML_WORKSPACE: ${{ secrets.AZURE_ML_WORKSPACE }}
         run: |
-          az extension add -n ml
-
-      - name: Update Managed Online Deployment
-        run: |
-          # Example command to deploy or update your endpoint using Azure CLI
-          az ml online-deployment update \
-            --file ./backend/jobs/blueDeployment.yml \
-            --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }} \
-            --workspace-name ${{ secrets.AZURE_ML_WORKSPACE }}
+          python backend/src/blueDeployment.py
