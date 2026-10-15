@@ -40,4 +40,4 @@ jobs:
           AZURE_RESOURCE_GROUP: ${{ secrets.AZURE_RESOURCE_GROUP }}
           AZURE_ML_WORKSPACE: ${{ secrets.AZURE_ML_WORKSPACE }}
         run: |
-          python backend/src/blueDeployment.py
+          python src/blueDeployment.py
