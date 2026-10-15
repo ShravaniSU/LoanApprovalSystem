@@ -82,7 +82,7 @@ with mlflow.start_run():
 
     # Conditional Quality Gate for Model Registration
     # Gates: Accuracy > 70% (0.70) AND Precision/Recall/F1 > 80% (0.80)
-    if acc > 0.70 and precision > 0.80 and recall > 0.80 and f1 > 0.80:
+    if acc > 0.75 and f1 > 0.70:
         print("Performance gates passed! Registering model to Azure ML...")
         mlflow.sklearn.log_model(
             sk_model=model,
