@@ -5,6 +5,8 @@ from azure.ai.ml.entities import (
     ManagedOnlineEndpoint,
     ManagedOnlineDeployment,
     CodeConfiguration,
+    DataCollector,
+    DeploymentCollection,
 )
 
 # 1. Connect to your AzureML workspace using environment variables from GitHub Secrets
@@ -30,7 +32,7 @@ ml_client.online_endpoints.begin_create_or_update(endpoint).result()
 model = ml_client.models.get(name="loan_prediction_model", label="latest")
 inference_env = ml_client.environments.get(name="loan-prediction-inference-env", version="2")
 
-# 4. Configure the deployment using your existing environment and score.py
+# 4. Configure the deployment using your existing environment, score.py, and Data Collector
 blue_deployment = ManagedOnlineDeployment(
     name="blue",
     endpoint_name=endpoint_name,
@@ -43,6 +45,12 @@ blue_deployment = ManagedOnlineDeployment(
     instance_type="Standard_F2s_v2",
     instance_count=1,
     app_insights_enabled=True,
+    data_collector=DataCollector(
+        collections={
+            "model_inputs": DeploymentCollection(enabled=True),
+            "model_outputs": DeploymentCollection(enabled=True),
+        }
+    ),
 )
 
 # 5. Create or update the deployment
